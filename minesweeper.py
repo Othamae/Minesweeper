@@ -54,9 +54,11 @@ def creating_grid(columns, rows, val):
             grid[i].append(val)
     return grid
     
-
-def show_grid():
-    pass
+def show_grid(grid):
+    for row in grid:
+        for elem in row:
+            print(elem, end=" ")
+        print()
 
 def adding_mines():
     pass
@@ -74,7 +76,8 @@ print(rows)
 print(mines)
 
 grid= creating_grid(columns, rows, 0)
-print(grid)
-
 user_grid = creating_grid(columns, rows, "-")
-print(user_grid)
+
+show_grid(grid)
+print()
+show_grid(user_grid)
