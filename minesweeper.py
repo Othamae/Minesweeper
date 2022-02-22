@@ -1,4 +1,5 @@
 import os
+import random
 
 
 columns=0
@@ -60,8 +61,16 @@ def show_grid(grid):
             print(elem, end=" ")
         print()
 
-def adding_mines():
-    pass
+def adding_mines(grid):
+    counter=0    
+    while counter<mines:
+        x = random.randint(0,columns-1)
+        y = random.randint(0,rows-1)
+        if grid[y][x]!=9:
+            grid[y][x]=9
+            counter+=1
+    return grid
+
 
 def place_flag():
     pass
@@ -81,3 +90,6 @@ user_grid = creating_grid(columns, rows, "-")
 show_grid(grid)
 print()
 show_grid(user_grid)
+adding_mines(grid)
+print()
+show_grid(grid)
