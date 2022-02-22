@@ -75,21 +75,64 @@ def adding_mines(grid):
 def place_flag():
     pass
 
-#Testing 
 
+
+#GAME 
 columns, rows, mines = game_presentation()
 instructions()
 
-print(columns)
-print(rows)
-print(mines)
-
 grid= creating_grid(columns, rows, 0)
 user_grid = creating_grid(columns, rows, "-")
-
-show_grid(grid)
-print()
-show_grid(user_grid)
 adding_mines(grid)
-print()
-show_grid(grid)
+
+#User position
+
+x= random.randint(0, rows-1)
+y= random.randint(0,columns-1)
+real = user_grid[y][x]
+user_grid[y][x] = "X"
+
+os.system("cls")
+
+show_grid(user_grid)
+
+#Loop
+flagged_mines=[]
+play = True
+while play:
+    move = menu()
+    if move=="a":
+        if x==0:
+            x=0
+        else:
+            user_grid[y][x]=real
+            x= x-1
+            real= user_grid[y][x]
+            user_grid[y][x] = "X"
+    elif move =="d":    
+        if x==columns-1:
+            x=columns-1
+        else:
+            user_grid[y][x]=real
+            x= x+1
+            real= user_grid[y][x]
+            user_grid[y][x] = "X"
+    elif move == "w":
+        if y==0:
+            y=0
+        else:
+            user_grid[y][x]=real
+            y= y-1
+            real= user_grid[y][x]
+            user_grid[y][x] = "X"
+    elif move == "s":
+        if y==rows-1:
+            y=rows-1
+        else:
+            user_grid[y][x]=real
+            y= y+1
+            real= user_grid[y][x]
+            user_grid[y][x] = "X"
+    os.system("cls")
+
+    show_grid(user_grid)
