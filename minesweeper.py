@@ -71,6 +71,19 @@ def adding_mines(grid):
             counter+=1
     return grid
 
+def place_clues(grid):
+    row = len(grid[0])
+    col = len(grid[row-1])
+    for y in range(row):
+        for x in range(col):
+            if grid[y][x]==9:
+                for i in [-1,0,1]:
+                    for j in [-1,0,1]:
+                        if 0<= y+i <= row-1 and 0<= x+j <= col-1:
+                            if grid[y+i][x+j]!=9:
+                                grid[y+i][x+j]+=1
+    return grid
+
 
 def place_flag():
     pass
@@ -95,6 +108,9 @@ user_grid[y][x] = "X"
 os.system("cls")
 
 show_grid(user_grid)
+
+grid= place_clues(grid)
+show_grid(grid)
 
 #Loop
 flagged_mines=[]
@@ -136,3 +152,6 @@ while play:
     os.system("cls")
 
     show_grid(user_grid)
+
+    
+    
