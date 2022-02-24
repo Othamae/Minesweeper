@@ -88,6 +88,22 @@ def place_clues(grid):
 def place_flag():
     pass
 
+def show_white_cells(grid, user_grid, y,x):
+    row = len(grid[0])
+    col = len(grid[row-1])
+    whites=[(y,x)]
+    while len(whites) >0:
+        y, x= whites.pop()
+        for i in [-1,0, 1]:
+            for j in [-1,0,1]:
+                if 0<= y+i <= row-1 and 0<= x+j <= col-1:
+                    if grid[y+i][x+j]==0 and user_grid[y+i][x+j]=="-":
+                        user_grid[y+i][x+j]=" "
+                        if (y+i, x+j) not in whites:
+                            whites.append((y+i, x+j))
+                    else:
+                        user_grid[y+i][x+j]=grid[y+i][x+j]
+    return user_grid
 
 
 #GAME 
@@ -149,6 +165,30 @@ while play:
             y= y+1
             real= user_grid[y][x]
             user_grid[y][x] = "X"
+
+    elif move == "f":
+        if real =="F":
+            user_grid[y][x]= "-"
+            real = user_grid[y][x]
+        elif real =="-":
+            user_grid[y][x]= "F"
+            real = user_grid[y][x]    
+
+    elif move == "o":
+        if grid[y][x]== 9:
+            user_grid[y][x] = "*"
+            print("GAME OVER!!")
+            play=False
+        
+        elif grid[y][x]== 0:
+            user_grid[y][x]= " "            
+            #buscar los 0 vecinos
+            user_grid = show_white_cells(grid, user_grid, y,x)
+        elif grid[y][x]!= 9: 
+            user_grid[y][x]=grid[y][x]
+            real= user_grid[y][x]
+            
+
     os.system("cls")
 
     show_grid(user_grid)
