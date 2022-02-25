@@ -6,6 +6,7 @@ columns=0
 rows=0
 mines=0
 
+
 #FUNCTIONS
 
 def game_presentation():
@@ -37,7 +38,7 @@ def instructions():
     print("     To flag a mine:")
     print("             Flag:   f")
     print()
-    print("Press enter to start...")
+    input("Press enter to start...")
     print()
 
 
@@ -84,10 +85,6 @@ def place_clues(grid):
                                 grid[y+i][x+j]+=1
     return grid
 
-
-def place_flag():
-    pass
-
 def show_white_cells(grid, user_grid, y,x):
     row = len(grid[0])
     col = len(grid[row-1])
@@ -103,7 +100,19 @@ def show_white_cells(grid, user_grid, y,x):
                             whites.append((y+i, x+j))
                     else:
                         user_grid[y+i][x+j]=grid[y+i][x+j]
+                    if user_grid[y+i][x+j]==0:
+                        user_grid[y+i][x+j] = " "                        
+
     return user_grid
+
+def board_completed(grid):
+    row = len(grid[0])
+    col = len(grid[row-1])
+    for y in range(row):
+        for x in range(col):
+            if grid[y][x]=="-" or grid[y][x]=="X":
+                return False
+    return True
 
 
 #GAME 
@@ -126,7 +135,7 @@ os.system("cls")
 show_grid(user_grid)
 
 grid= place_clues(grid)
-show_grid(grid)
+
 
 #Loop
 flagged_mines=[]
@@ -176,22 +185,32 @@ while play:
 
     elif move == "o":
         if grid[y][x]== 9:
-            user_grid[y][x] = "*"
-            print("GAME OVER!!")
+            user_grid[y][x] = "*"            
             play=False
+            os.system("cls")
+            show_grid(user_grid)
+            print("GAME OVER!!")
+            break            
         
         elif grid[y][x]== 0:
-            user_grid[y][x]= " "            
-            #buscar los 0 vecinos
+            user_grid[y][x]= str(" ") 
             user_grid = show_white_cells(grid, user_grid, y,x)
+            real=" "
         elif grid[y][x]!= 9: 
             user_grid[y][x]=grid[y][x]
             real= user_grid[y][x]
-            
+
+    if board_completed(user_grid):  
+        os.system("cls")
+        show_grid(user_grid)      
+        print("CONGRATULATIONS!! YOU WIN!!")
+        break
+        
 
     os.system("cls")
 
     show_grid(user_grid)
 
+    
     
     
